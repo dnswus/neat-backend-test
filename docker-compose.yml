@@ -1,0 +1,19 @@
+version: '3'
+services:
+  mq:
+    image: rabbitmq
+    ports:
+      - "5672:5672"
+      - "8080:15672"
+  producer:
+    build:
+      context: producer/.
+    depends_on:
+      - mq
+  consumer:
+    build:
+      context: consumer/.
+    ports:
+      - "4567:4567"
+    depends_on:
+      - mq
